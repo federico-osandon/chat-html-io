@@ -1,4 +1,4 @@
-# Socket Server
+# Socket Server PRÓXIMAMENTE LA DEMO EN HEROKU. 
 
 Este backend contiene todo lo necesario para configurar un servidor de express + socket.io.
 
