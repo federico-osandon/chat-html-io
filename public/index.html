@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket Server</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css" integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous">
+</head>
+<body class="container">
+
+    <h1 class="mt-5">MiniChat</h1>
+    <hr>
+    <form id="miFormulario">
+        <div class="row">
+            <div class="col-8">
+                <input type="text" id="mensaje" placeholder="Ingresar el mensaje" class="form-control" />
+            </div> 
+            <div class="col-4">
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </div>           
+        </div>
+    </form>
+
+    <div class="row mt-5">
+        <div class="col">
+            <ul id="misMensajes">
+               
+            </ul>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.1/socket.io.js" integrity="sha512-vGcPDqyonHb0c11UofnOKdSAt5zYRpKI4ow+v6hat4i96b7nHSn8PQyk0sT5L9RECyksp+SztCPP6bqeeGaRKg==" crossorigin="anonymous"></script>
+
+    <script>
+        // Conexión con el socket server
+        const socket = io('http://localhost:8080');
+
+        // Referencias a los elementos del dom
+        const formulario = document.querySelector('#miFormulario')
+        const misMensajes = document.querySelector('#misMensajes')
+        const mensajes = document.querySelector('#mensaje')
+
+        formulario.addEventListener('submit', (evt) => {
+            evt.preventDefault()
+
+            const nuevoMensaje = mensaje.value
+            //console.log(nuevoMensaje)
+            socket.emit('mensaje-to-server',  { texto: nuevoMensaje } );
+        })
+        
+        /// Para emitir
+        //let data = {msg: 'hola soy el cliente', nombre: 'federico'}
+        
+        // Para escuchar // on(evento, callback)
+        socket.on('mensaje-from-server', (data) => {
+            // callback a ejecutar
+            misMensajes.innerHTML += `<li>${data.texto}</li>`
+            console.log('El servidor emitio algo ')
+            console.log(data)
+            console.log(mensajes)
+        });
+        
+
+    </script>
+    
+</body>
+</html>
